@@ -1,4 +1,4 @@
-var url = require('url');
+import url from "url";
 const getPath = (req) => {
     return req.url;
 }
@@ -8,4 +8,4 @@ const getParamsURL = (req) => {
     return JSON.stringify(urlData.query);
 }
 
-module.exports = {getPath, getParamsURL}
+export default {getPath, getParamsURL}

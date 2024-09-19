@@ -1,6 +1,6 @@
-var http = require("http");
-var date = require("./date");
-var getURL = require('./getURL');
+import http from "http";
+import date from "./date";
+import getURL from "./getURL";
 
 http.createServer(function (req, res) {
     res.writeHead(200, {
