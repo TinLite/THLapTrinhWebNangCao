@@ -1,0 +1,93 @@
+<div class="d-flex flex-row-reverse">
+  <button
+  class="btn btn-primary"
+  data-bs-toggle="modal"
+  data-bs-target="#modal-add"
+  >
+    <i class="fa fa-plus me-1"></i>
+    New entry
+  </button>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th>STT</th>
+      <th>Fullname</th>
+      <th>Username</th>
+      <th>Address</th>
+      <th>Setting</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (!users || users.length == 0) { %>
+    <tr>
+      <td colspan="5" style="text-align: center;">Chưa có người dùng nào</td>
+    </tr>
+    <% } else users.forEach((user) => { %>
+    <tr>
+      <th><%= user.username %></th>
+      <td>A</td>
+      <td>B</td>
+      <td>C</td>
+      <td>
+        <a href="#" class="icon-link">
+          <i class="fa fa-eye"></i>
+        </a>
+        <a href="#" class="icon-link">
+          <i class="fa fa-pen"></i>
+        </a>
+        <a href="#" class="icon-link">
+          <i class="fa fa-trash"></i>
+        </a>
+      </td>
+    </tr>
+  <% }) %>
+  </tbody>
+</table>
+
+<div class="modal fade" id="modal-add" tabindex="-1" aria-labelledby="modal-add" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">New user</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="#">
+          <div class="mb-3">
+            <label class="form-label" for="username">Username</label>
+            <input type="text" name="username" id="username" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="password">Password</label>
+            <input type="password" name="password" id="password" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="fullname">Fullname</label>
+            <input type="text" name="fullname" id="fullname" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="fullname">Fullname</label>
+            <input type="text" name="fullname" id="fullname" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="fullname">Fullname</label>
+            <input type="text" name="fullname" id="fullname" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Gender</label>
+            <div class="btn-group" role="group" aria-label="Gender">
+              <button type="button" class="btn btn-primary">Left</button>
+              <button type="button" class="btn btn-primary">Middle</button>
+              <button type="button" class="btn btn-primary">Right</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abort</button>
+        <button type="button" class="btn btn-primary">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
