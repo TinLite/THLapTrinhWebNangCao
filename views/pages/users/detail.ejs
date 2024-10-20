@@ -1,0 +1,136 @@
+<div class="my-4">
+  <h6>Showing detailed info about <%= user.username %>
+  </h6>
+  <h5>Username</h5>
+    <p>
+      <%= user.username %>
+    </p>
+    <h5>Full name</h5>
+    <p>
+      <%= user.fullname %>
+    </p>
+    <h5>Address</h5>
+    <p>
+      <%= user.address %>
+    </p>
+    <h5>Gender</h5>
+    <p>
+      <%= (user.sex) ? "Male" : "Female" %>
+    </p>
+    <h5>Email</h5>
+    <p>
+      <%= user.email %>
+    </p>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-update-user">
+      Update user
+    </button>
+    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modal-update-password">
+      Change password
+    </button>
+    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-user">
+      Remove user
+    </button>
+</div>
+
+<div class="modal fade" id="modal-update-user" tabindex="-1" aria-labelledby="modal-update-user" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Update user</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/users/<%= user.username %>" method="post" class="needs-validation">
+          <div class="mb-3">
+            <label class="form-label" for="username">Username</label>
+            <input type="text" id="username" class="form-control" value="<%= user.username %>" disabled>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="fullname">Fullname</label>
+            <input type="text" name="fullname" id="fullname" class="form-control has-validation"
+              value="<%= user.fullname %>" required>
+            <div class="invalid-feedback">This is an required field and can not be left empty.</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="address">Address</label>
+            <input type="text" name="address" id="address" class="form-control" value="<%= user.address %>">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Gender</label>
+            <div class="btn-group w-100" role="group" aria-label="Gender">
+              <input type="radio" class="btn-check" name="sex" id="sex-male" value="1" <% if (user.sex=="1" ) { %>
+              checked<%}%>>
+                <label class="btn btn-primary" for="sex-male">Male</label>
+                <input type="radio" class="btn-check" name="sex" id="sex-female" value="0" <% if (user.sex=="0" ) { %>
+                checked<%}%>>
+                  <label class="btn btn-primary" for="sex-female">Female</label>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="email">Email</label>
+            <input type="email" name="email" id="email" class="form-control" value="<%= user.email %>">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abort</button>
+            <button type="submit" class="btn btn-primary">Confirm</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-update-password" tabindex="-1" aria-labelledby="modal-update-password"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Change password</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/users/<%= user.username %>/changePassword" method="post" class="needs-validation">
+          <div class="mb-3">
+            <label class="form-label" for="password">Password</label>
+            <input type="password" name="password" id="password" class="form-control has-validation" required>
+            <div class="invalid-feedback">This is an required field and can not be left empty.</div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abort</button>
+            <button type="submit" class="btn btn-primary">Confirm</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-delete-user" tabindex="-1" aria-labelledby="modalDeleteUser" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Remove this user?</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>This action is irreversible. Confirm?</p>
+      </div>
+      <form action="/users/<%= user.username %>/delete" method="post">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abort</button>
+          <button type="submit" class="btn btn-danger">Confirm</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search)
+  const modal = params.get('modal')
+  if (modal) {
+    const modalElement = document.getElementById(modal)
+    const modalInstance = new bootstrap.Modal(modalElement)
+    modalInstance.show()
+  }
+</script>

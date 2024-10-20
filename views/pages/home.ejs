@@ -1,9 +1,5 @@
 <div class="d-flex flex-row-reverse">
-  <button
-  class="btn btn-primary"
-  data-bs-toggle="modal"
-  data-bs-target="#modal-add"
-  >
+  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add">
     <i class="fa fa-plus me-1"></i>
     New entry
   </button>
@@ -19,29 +15,31 @@
     </tr>
   </thead>
   <tbody>
-    <% if (!users || users.length == 0) { %>
-    <tr>
-      <td colspan="5" style="text-align: center;">Chưa có người dùng nào</td>
-    </tr>
-    <% } else users.forEach((user) => { %>
-    <tr>
-      <th><%= user.username %></th>
-      <td>A</td>
-      <td>B</td>
-      <td>C</td>
-      <td>
-        <a href="#" class="icon-link">
-          <i class="fa fa-eye"></i>
-        </a>
-        <a href="#" class="icon-link">
-          <i class="fa fa-pen"></i>
-        </a>
-        <a href="#" class="icon-link">
-          <i class="fa fa-trash"></i>
-        </a>
-      </td>
-    </tr>
-  <% }) %>
+    <% if (!users || users.length==0) { %>
+      <tr>
+        <td colspan="5" style="text-align: center;">Chưa có người dùng nào</td>
+      </tr>
+      <% } else users.forEach((user, index)=> { %>
+        <tr>
+          <th>
+            <%= index + 1 %>
+          </th>
+          <td><%= user.fullname %></td>
+          <td><%= user.username %></td>
+          <td><%= user.address %></td>
+          <td>
+            <a href="/users/<%= user.username %>" class="icon-link">
+              <i class="fa fa-eye"></i>
+            </a>
+            <a href="/users/<%= user.username %>?modal=modal-update-user" class="icon-link">
+              <i class="fa fa-pen"></i>
+            </a>
+            <a href="/users/<%= user.username %>?modal=modal-delete-user" class="icon-link">
+              <i class="fa fa-trash"></i>
+            </a>
+          </td>
+        </tr>
+        <% }) %>
   </tbody>
 </table>
 
@@ -53,40 +51,44 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="#">
+        <form action="/users/create" method="post" class="needs-validation">
           <div class="mb-3">
             <label class="form-label" for="username">Username</label>
-            <input type="text" name="username" id="username" class="form-control">
+            <input type="text" name="username" id="username" class="form-control has-validation" required>
+            <div class="invalid-feedback">This is an required field and can not be left empty.</div>
           </div>
           <div class="mb-3">
             <label class="form-label" for="password">Password</label>
-            <input type="password" name="password" id="password" class="form-control">
+            <input type="password" name="password" id="password" class="form-control has-validation" required>
+            <div class="invalid-feedback">This is an required field and can not be left empty.</div>
           </div>
           <div class="mb-3">
             <label class="form-label" for="fullname">Fullname</label>
-            <input type="text" name="fullname" id="fullname" class="form-control">
+            <input type="text" name="fullname" id="fullname" class="form-control has-validation" required>
+            <div class="invalid-feedback">This is an required field and can not be left empty.</div>
           </div>
           <div class="mb-3">
-            <label class="form-label" for="fullname">Fullname</label>
-            <input type="text" name="fullname" id="fullname" class="form-control">
-          </div>
-          <div class="mb-3">
-            <label class="form-label" for="fullname">Fullname</label>
-            <input type="text" name="fullname" id="fullname" class="form-control">
+            <label class="form-label" for="address">Address</label>
+            <input type="text" name="address" id="address" class="form-control">
           </div>
           <div class="mb-3">
             <label class="form-label">Gender</label>
-            <div class="btn-group" role="group" aria-label="Gender">
-              <button type="button" class="btn btn-primary">Left</button>
-              <button type="button" class="btn btn-primary">Middle</button>
-              <button type="button" class="btn btn-primary">Right</button>
+            <div class="btn-group w-100" role="group" aria-label="Gender">
+              <input type="radio" class="btn-check" name="sex" id="sex-male" value="1">
+              <label class="btn btn-primary" for="sex-male">Male</label>
+              <input type="radio" class="btn-check" name="sex" id="sex-female" value="0">
+              <label class="btn btn-primary" for="sex-female">Female</label>
             </div>
           </div>
+          <div class="mb-3">
+            <label class="form-label" for="email">Email</label>
+            <input type="email" name="email" id="email" class="form-control">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abort</button>
+            <button type="submit" class="btn btn-primary">Confirm</button>
+          </div>
         </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abort</button>
-        <button type="button" class="btn btn-primary">Confirm</button>
       </div>
     </div>
   </div>
