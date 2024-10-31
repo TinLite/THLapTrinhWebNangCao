@@ -2,16 +2,16 @@ import { get } from "../controllers/AboutController";
 import connection from "../services/connectDB";
 
 function getAllUsers() {
-    
+    return connection.execute("SELECT username, fullname, address FROM user")
 }
 
-function insertOne({username, fullname, password, address, sex, email}) {
-    return connection.execute("INSERT INTO user (username, fullname, password, address, sex, email) VALUES (?, ?, ?, ?, ?, ?)",
-        [username, fullname, password, address, sex, email]
+function insertOne({username, fullname, password, address, sex, email, role = 1}) {
+    return connection.execute("INSERT INTO user (username, fullname, password, address, sex, email, role) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        [username, fullname, password, address, sex, email, role]
     )
 }
 
-function getOne(username) {
+function findOne(username) {
     return connection.execute("SELECT * FROM user WHERE username = ?", [username])
 }
 
@@ -31,7 +31,7 @@ function deleteOne(username) {
 export default {
     getAllUsers,
     insertOne,
-    getOne,
+    findOne,
     updateOne,
     updateOnePassword,
     deleteOne,

@@ -7,6 +7,5 @@ import { Request, Response } from 'express'
 export function get(req, res) {
     res.render("main", {
         page: "about",
-
     })
 }

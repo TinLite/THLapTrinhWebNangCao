@@ -2,18 +2,16 @@ import { Request, Response } from 'express'
 import connection from '../services/connectDB'
 import bcrypt from 'bcrypt'
 import UserModel from '../models/UserModel'
+import { render } from '../utils/RenderUtils';
 /**
  * 
  * @param {Request} req 
  * @param {Response} res 
  */
 async function get(req, res) {
-    const [data] = await connection.execute("SELECT username, fullname, address FROM user")
-    console.log(data)
-    res.render("main", {
-        page: "home",
+    const [data] = await UserModel.getAllUsers();
+    render(req, res, "home", {
         users: data,
-        query: req.query,
     })
 }
 
@@ -42,7 +40,7 @@ async function createNewUser(req, res) {
  * @param {Response} res 
  */
 async function getOneUser(req, res) {
-    const [data] = await UserModel.getOne(req.params.username)
+    const [data] = await UserModel.findOne(req.params.username)
     res.render("main", {
         page: "users/detail",
         user: data[0],
@@ -53,7 +51,7 @@ async function getOneUser(req, res) {
 async function updateOneUser(req, res) {
     const data = req.body
     const username = req.params.username
-    const [user] = await UserModel.getOne(req.params.username)
+    const [user] = await UserModel.findOne(req.params.username)
     if (user.length == 0) {
         res.redirect("/")
     }
