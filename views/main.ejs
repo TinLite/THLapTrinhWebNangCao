@@ -25,11 +25,7 @@
         <div class="text-bg-danger p-1 w-100 text-center"><%= v %></div>
       <%})
     } %>
-    <% if (typeof authenticatedUser != 'undefined') { %>
-    <%- include('components/header', {authenticatedUser}) -%>
-    <% } else { %>
     <%- include('components/header') -%>
-    <% } %>
     <div class="container" style="flex-grow: 1; display: grid;">
       <%- include('pages/' + page) %>
     </div>

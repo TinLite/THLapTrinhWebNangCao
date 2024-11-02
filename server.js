@@ -9,7 +9,7 @@ const app = express();
 const port = process.env.PORT;
 
 app.use((req, res, next) => {
-    console.log(`${req.ip} ${req.method} ${req.url}`)
+    console.log(`${(new Date()).toISOString()} ${req.ip} ${req.method} ${req.url}`)
     next();
 })
 
@@ -21,7 +21,9 @@ app.use(session({
         secure: false
     }
 }))
+
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 viewEngine(app);
 initWebRoute(app)
