@@ -2,13 +2,14 @@ import { Request, Response } from 'express';
 import { get } from '../AboutController';
 import UserModel from '../../models/UserModel';
 import bcrypt from 'bcrypt';
+import SqlUserModel from '../../models/SqlUserModel';
 /**
  * 
  * @param {Request} req 
  * @param {Response} res 
  */
-function getAll(req, res) {
-    UserModel.getAllUsers().then((data) => {
+async function getAll(req, res) {
+    SqlUserModel.findAll().then((data) => {
         res.json({
             message: "Success",
             data: data[0],
