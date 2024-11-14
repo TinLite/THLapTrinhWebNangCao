@@ -5,6 +5,8 @@ import initWebRoute from './route/webRoute';
 import bodyParser from 'body-parser';
 import session from 'express-session';
 import sequelizeConnection from './services/sequelizeDB';
+import Nhom from './models/SqlNhomModel';
+import SanPham from './models/SqlSanphamModel';
 
 const app = express();
 const port = process.env.PORT;

@@ -6,7 +6,11 @@ import AuthController from "../controllers/AuthController";
 import ParamUserIdAuthorization from "../middlewares/ParamUserIdAuthorization";
 import UserApiController from "../controllers/api/UserApiController";
 import AuthenticationApiController from "../controllers/api/AuthenticationApiController";
+import NhomSpApiController from "../controllers/api/NhomSpApiController";
+import SanPhamApiController from "../controllers/api/SanPhamApiController";
+
 const router = Router();
+
 export default function initWebRoute(app) {
 
     // Api Routes
@@ -19,6 +23,11 @@ export default function initWebRoute(app) {
     router.get("/api/users/:username", UserApiController.getOne)
     router.put("/api/users/:username", UserApiController.updateOne)
     router.delete("/api/users/:username", UserApiController.removeOne)
+
+    router.get("/api/nhomsp", NhomSpApiController.getAll);
+
+    router.get("/api/sanpham", SanPhamApiController.getAll);
+    router.get("/api/sanpham/:id", SanPhamApiController.getOne);
 
     router.get("/", HomeController.get)
 
