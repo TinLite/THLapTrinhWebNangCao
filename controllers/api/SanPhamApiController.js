@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import SanPham from '../../models/SqlSanphamModel';
+import Nhom from '../../models/SqlNhomModel';
 
 /**
  * 
@@ -8,14 +9,20 @@ import SanPham from '../../models/SqlSanphamModel';
  */
 async function getAll(req, res) {
     const { nhom } = req.query
-    if (!nhom)
-        res.send(await SanPham.findAll());
-    else
-        res.send(await SanPham.findAll({
-            where: {
-                idnhom: nhom
-            }
-        }));
+    if (!nhom) {
+        res.send({
+            data: await SanPham.findAll(),
+        });
+    } else {
+        res.send({
+            data: await SanPham.findAll({
+                where: {
+                    idnhom: nhom
+                }
+            }),
+            nhom: await Nhom.findByPk(nhom),
+        });
+    }
 }
 
 /**
@@ -27,7 +34,13 @@ async function getOne(req, res) {
     if (!req.params.id) {
         res.status(400).send('ID is required');
     }
-    res.send(await SanPham.findOne(req.params.id));
+    const data = await SanPham.findByPk(req.params.id, {
+        include: {
+            model: Nhom,
+            attributes: ['ten'],
+        }
+    })
+    res.send(data);
 }
 
 export default {

@@ -8,14 +8,17 @@ import UserApiController from "../controllers/api/UserApiController";
 import AuthenticationApiController from "../controllers/api/AuthenticationApiController";
 import NhomSpApiController from "../controllers/api/NhomSpApiController";
 import SanPhamApiController from "../controllers/api/SanPhamApiController";
+import UserLoadByToken from "../middlewares/UserLoadByToken";
 
 const router = Router();
 
 export default function initWebRoute(app) {
 
+    router.use("/api", UserLoadByToken);
     // Api Routes
     router.post("/api/login", AuthenticationApiController.login)
     router.post("/api/logout", AuthenticationApiController.logout)
+    router.get("/api/profile", AuthenticationApiController.getProfile)
 
     router.get("/api/users", UserApiController.getAll)
     router.post("/api/users", UserApiController.insertOne)

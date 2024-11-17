@@ -7,6 +7,8 @@ import session from 'express-session';
 import sequelizeConnection from './services/sequelizeDB';
 import Nhom from './models/SqlNhomModel';
 import SanPham from './models/SqlSanphamModel';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 const app = express();
 const port = process.env.PORT;
@@ -16,19 +18,27 @@ app.use((req, res, next) => {
     next();
 })
 
+app.use(cors({
+    origin: true,
+    optionsSuccessStatus: 200,
+    credentials: true,
+}))
+
 sequelizeConnection.authenticate().then(() => {
     console.log('Connection has been established successfully.');
 }).catch((err) => {
     console.error('Unable to connect to the database:', err);
 });
 
+app.use(cookieParser());
+
 app.use(session({
-    secret: 'keyboard cat',
+    secret: process.env.SESSION_SECRET ?? process.env.SECRET ?? 'keyboard cat',
     resave: false,
     saveUninitialized: true,
     cookie: {
         secure: false
-    }
+    },
 }))
 
 app.use(bodyParser.urlencoded({ extended: false }))

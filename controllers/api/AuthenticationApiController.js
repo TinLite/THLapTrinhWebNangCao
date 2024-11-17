@@ -1,5 +1,6 @@
 import UserModel from "../../models/UserModel"
 import bcrypt from "bcrypt"
+import { createToken } from "../../services/jwt"
 
 function login(req, res) {
     const { username, password } = req.body
@@ -12,10 +13,14 @@ function login(req, res) {
         }
         bcrypt.compare(password, user[0][0].password).then((result) => {
             if (result) {
-                req.session.username = username
+                const token = createToken({username})
+                res.cookie('jwt', token, {
+                    httpOnly: true,
+                });
                 return res.json({
                     message: "Success",
-                })
+                    token: token,
+                });
             }
             return res.status(401).json({
                 message: "Unauthorized",
@@ -31,13 +36,22 @@ function login(req, res) {
 }
 
 function logout(req, res) {
-    req.session.destroy()
+    res.clearCookie('jwt');
+    req.session.destroy();
     res.json({
         message: "Success",
+    })
+}
+
+function getProfile(req, res) {
+    res.json({
+        message: "Success",
+        data: req.user,
     })
 }
 
 export default {
     login,
     logout,
+    getProfile,
 }
